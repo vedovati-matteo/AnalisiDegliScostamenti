@@ -1,6 +1,7 @@
 
 import pandas as pd
 import sqlite3
+ 
 
 def getDfCosto(df, conn):
 
@@ -9,7 +10,7 @@ def getDfCosto(df, conn):
 	for (nrOrdineProduzione, nrArticolo),df_OdP_Art in df.groupby(["nrOrdineProduzione", "nrArticolo"]):
 		
 		costo = (df_OdP_Art['tempoRisorsa'] * df_OdP_Art['costoOrarioRis']).sum()
-		quantita = df_OdP_Art['quantitaOutput'].sum()
+		quantita = df_OdP_Art['quantitaOutput'].max()
 		
 		df_consumi = pd.read_sql_query("""
 			SELECT *
