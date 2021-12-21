@@ -43,6 +43,26 @@ volume_costi_c = df_costo_c['quantita'].sum()
 volume_ricavi_b = df_ricavi_b['quantita'].sum()
 volume_ricavi_c = df_ricavi_c['quantita'].sum()
 
+# mix
+mix_costi_b = df_costo_b['quantita'] / volume_costi_b 
+mix_costi_c = df_costo_c['quantita'] / volume_costi_c 
+mix_ricavi_b = df_ricavi_b['quantita'] / volume_ricavi_b 
+mix_ricavi_b = df_ricavi_b['quantita'] / volume_ricavi_b 
+
+# costi unitari
+costoU_b = df_costo_b['costo'] / df_costo_b['quantita']
+costoU_c = df_costo_c['costo'] / df_costo_c['quantita']
+# materiale diretto
+mdU_b = df_costo_b['md'] / df_costo_b['quantita']
+mdU_c = df_costo_c['md'] / df_costo_c['quantita']
+#lavoro diretto
+ldU_b = df_costo_b['ld'] / df_costo_b['quantita']
+ldU_c = df_costo_c['ld'] / df_costo_c['quantita']
+
+# ricavi unitari
+ricaviU_b = df_ricavi_b['ricavo'] / df_ricavi_b['quantita']
+ricaviU_c = df_ricavi_c['ricavo'] / df_ricavi_c['quantita']
+
 # valuta
 df_valuta = pd.read_sql_query("""
 	SELECT *
@@ -55,5 +75,10 @@ df_valuta_c = BCgrouped.get_group('CONSUNTIVO')
 
 
 
+
+# %%
+
+budget = fun.getColonnaGen2(volume_costi_b, mix_costi_b, mdU_b, ldU_b, volume_ricavi_b, mix_ricavi_b, ricaviU_b, df_ricavi_b['valuta'], df_valuta_b)
+print(budget)
 
 # %%
