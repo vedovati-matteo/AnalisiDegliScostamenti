@@ -8,6 +8,8 @@ def getDfCosto(df, conn):
 	costo_OdP_l = []
 
 	for (nrOrdineProduzione, nrArticolo),df_OdP_Art in df.groupby(["nrOrdineProduzione", "nrArticolo"]):
+		#per ogni articolo in ogni OdP(Ordine di Produzione) calcolo il costo (materie prime + lavorazione) e la quantità
+		#poi sommo costi e quantià per ogni articolo (senza dividere per ordini di produzione)
 		
 		costo = (df_OdP_Art['tempoRisorsa'] * df_OdP_Art['costoOrarioRis']).sum()
 		quantita = df_OdP_Art['quantitaOutput'].max()
@@ -38,7 +40,7 @@ def getDfCosto(df, conn):
 	return df_costo
 
 def getDfRicavi(df):
-	
+	#per ogni articolo trovo quanto ne ho venduto e quanto è il guadagno totale
 	ricavi_l = []
 
 	for (nrArticolo),df_Art in df.groupby('nrArticolo'):
