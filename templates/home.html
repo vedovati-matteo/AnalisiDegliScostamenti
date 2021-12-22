@@ -1,17 +1,70 @@
+import random
 {% extends "base.html" %}
 
 {% block title %}Analisi Degli Scostamenti{% endblock %}
 
 {% block content %}
 	
-<table>
-	{% for a in p %}
+<table id="tabellaScostamenti">
+	<thead>
+		<th></th>
+		<th>Budget</th>
+		<th>Delta</th>
+		<th>Mix standard</th>
+		<th>Delta</th>
+		<th>Mix effettivo</th>
+		<th>Delta</th>
+		<th>Consuntivo</th>
+	</thead>
+		
+	{% for x in range(0, 5) %}
 		<tr>
-			{% for b in a %}
-				<td>{{ b }}</td>
-			{% endfor %}
+			{% if x==0 %}<td id="tdX">Materiale diretto</td>{% endif %}
+			{% if x==1 %}<td id="tdX">Lavoro diretto</td>{% endif %}
+			{% if x==2 %}<td id="tdX">Costi totali</td>{% endif %}
+			{% if x==3 %}<td id="tdX">Ricavi totali</td>{% endif %}
+			{% if x==4 %}<td id="tdX">Margine</td>{% endif %}
+			<td id="tdXY" class = "tdXY">{{ p[0][x] }}</td>
+			<td id="tdXY" class = "tdXY">{{ p[1][x]-p[0][x] }}</td>
+			<td id="tdXY" class = "tdXY">{{ p[1][x] }}</td>
+			<td id="tdXY" class = "tdXY">{{ p[2][x]-p[1][x] }}</td>
+			<td id="tdXY" class = "tdXY">{{ p[2][x] }}</td>
+			<td id="tdXY" class = "tdXY">{{ p[3][x]-p[2][x] }}</td>
+			<td id="tdXY" class = "tdXY">{{ p[3][x] }}</td>
 		</tr>
 	{% endfor %}
+		
+</table>
+
+<table id="tabellaScostamenti">
+	<thead>
+		<th></th>
+		<th>Budget</th>
+		<th>Delta</th>
+		<th>Mix standard</th>
+		<th>Delta</th>
+		<th>Mix effettivo</th>
+		<th>Delta</th>
+		<th>Consuntivo</th>
+	</thead>
+		
+	{% for x in range(0, 5) %}
+		<tr>
+			{% if x==0 %}<td id="tdX">Materiale diretto</td>{% endif %}
+			{% if x==1 %}<td id="tdX">Lavoro diretto</td>{% endif %}
+			{% if x==2 %}<td id="tdX">Costi totali</td>{% endif %}
+			{% if x==3 %}<td id="tdX">Ricavi totali</td>{% endif %}
+			{% if x==4 %}<td id="tdX">Margine</td>{% endif %}
+			<td id="tdXY" class = "tdXY">{{ p[0][x] }}</td>
+			<td id="tdXY" class = "tdXY">{{ ((p[1][x]-p[0][x])/p[0][x]*100)|round(2) }}%</td>
+			<td id="tdXY" class = "tdXY">{{ p[1][x] }}</td>
+			<td id="tdXY" class = "tdXY">{{ ((p[2][x]-p[1][x])/p[1][x]*100)|round(2) }}%</td>
+			<td id="tdXY" class = "tdXY">{{ p[2][x] }}</td>
+			<td id="tdXY" class = "tdXY">{{ ((p[3][x]-p[2][x])/p[2][x]*100)|round(2) }}%</td>
+			<td id="tdXY" class = "tdXY">{{ p[3][x] }}</td>
+		</tr>
+	{% endfor %}
+		
 </table>
 
 <script>
