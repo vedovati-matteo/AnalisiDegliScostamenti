@@ -145,8 +145,10 @@ for row in csvreader:
 
 file.close()
 
-
-
+artDel = 'ART0004084'
+c.execute('DELETE FROM Consumo WHERE nrArticolo="ART0004084"')
+c.execute('DELETE FROM Impiego_orario_risorse WHERE nrArticolo="ART0004084"')
+c.execute('DELETE FROM Vendita WHERE nrArticolo="ART0004084"')
 
 conn.commit()
 conn.close()
