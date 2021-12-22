@@ -62,31 +62,6 @@ def getDfRicavi(df):
 	return df_ricavi
 
 def getColonnaGen(volumeC, mixC, mdU, ldU, volumeV, mixV, ricaviU, valutaType, valuta):
-	
-	mixC_np = np.array(mixC)
-	mdU_np = np.array(mdU)
-	ldU_np = np.array(ldU)
-	mixV_np = np.array(mixV)
-	ricaviU_np = np.array(ricaviU)
-	valutaType_np = np.array(valutaType)
-	valuta_np = np.array(valuta['tassoCambio'][valutaType_np - 1])
-
-	volumeMixC = volumeC * mixC_np
-	mdMix = volumeMixC * mdU_np
-	ldMix = volumeMixC * ldU_np
-
-	MD = np.ma.masked_invalid(mdMix).sum()
-	LD = np.ma.masked_invalid(ldMix).sum()
-
-	volumeMixV = volumeV * mixV_np
-	ricaviMix = volumeMixV * ricaviU_np / valuta_np
-
-	R = np.sum(ricaviMix)
-
-	return [MD, LD, MD + LD, R, R - MD - LD]
-
-
-def getColonnaGen2(volumeC, mixC, mdU, ldU, volumeV, mixV, ricaviU, valutaType, valuta):
 
 	volumeMixC = volumeC * mixC
 	mdMix = volumeMixC * mdU
@@ -94,9 +69,22 @@ def getColonnaGen2(volumeC, mixC, mdU, ldU, volumeV, mixV, ricaviU, valutaType, 
 
 	MD = mdMix.sum()
 	LD = ldMix.sum()
+  
+  volumeMixV = volumeV * mixV
+	rMix = volumeMixV * ricaviU / list(valuta['tassoCambio'].iloc[valutaType - 1])
 
-	return [MD, LD, MD + LD]
+	R = rMix.sum()
 
+	return [round(MD, 2), round(LD, 2), round(LD + MD, 2), round(R, 2), round(R - LD - MD, 2)]
+
+def getScostamentoMix(articoli, mix_b, mix_c):
+	
+	df_mix = pd.DataFrame(list(zip(articoli, mix_b, mix_c - mix_b, mix_c)), columns=['nrArticolo','budget', 'scostamento', 'consuntivo'])
+	return df_mix.sort_values(by='scostamento', key=abs, ascending=False)
+
+def getScostamentoMDeLD(articoli, b, c, q):
+	df = pd.DataFrame(list(zip(articoli, q, round(q*(c-b), 2), b, round(c - b, 2), c)), columns=['nrArticolo','quantita', 'scostamento', 'budgetU', 'scostamentoU', 'consuntivoU'])
+	return df.sort_values(by='scostamento', key=abs, ascending=False)
 
 def articoloFinale(num_Articolo, tabella_valute_budget, tabella_valute_consuntivo, tabella_costi_budget,
 	tabella_costi_consuntivo, tabella_vendite_budget, tabella_vendite_consuntivo, filtrata = False):
@@ -179,3 +167,4 @@ def getScostamenti(df_costo_b, df_costo_c, df_ricavi_b, df_ricavi_c):
 	data = pd.DataFrame(zip( list(c['nrArticolo']), list((c['costo_x'] - c['costo_y']) + (c['ricavo_y'] - c['ricavo_x']))),columns=['nrArticolo','scostamento'])
 
 	return data.sort_values("scostamento", key = abs, ascending=False)
+

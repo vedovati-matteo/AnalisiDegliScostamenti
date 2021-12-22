@@ -144,11 +144,15 @@ for row in csvreader:
     c.execute('INSERT INTO Vendita VALUES (' + row[0] + ', "' + row[1].upper() + '", "' + row[2] + '", "' + row[3] + '", "' + row[4] + '", "' + row[5] + '", ' + row[6] + ', ' + row[7] + ');')
 
 file.close()
-
-artDel = 'ART0004084'
+# ART0004084
 c.execute('DELETE FROM Consumo WHERE nrArticolo="ART0004084"')
 c.execute('DELETE FROM Impiego_orario_risorse WHERE nrArticolo="ART0004084"')
 c.execute('DELETE FROM Vendita WHERE nrArticolo="ART0004084"')
+
+# ART0004146
+c.execute('DELETE FROM Consumo WHERE nrArticolo="ART0004146"')
+c.execute('DELETE FROM Impiego_orario_risorse WHERE nrArticolo="ART0004146"')
+c.execute('DELETE FROM Vendita WHERE nrArticolo="ART0004146"')
 
 conn.commit()
 conn.close()
