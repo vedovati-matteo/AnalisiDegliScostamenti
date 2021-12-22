@@ -82,3 +82,5 @@ budget = fun.getColonnaGen2(volume_costi_b, mix_costi_b, mdU_b, ldU_b, volume_ri
 print(budget)
 
 # %%
+
+#a = fun.articoloFinale('ART0000018', df_valuta_b, df_valuta_c, df_costo_b, df_costo_c, df_ricavi_b, df_ricavi_c)
