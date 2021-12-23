@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Lista Finali Articoli{% endblock %}
+
+{% block content %}
+	
+<table id="tabellaScostamenti">
+	<thead>
+		<th>Codice Articolo</th>
+		<th>Scostamento Finale</th>
+	</thead>
+		
+	{% for x in p %}
+		<tr>
+			<td id="tdXY" class = "tdXY">{{ x[0] }}</td>
+			<td id="tdXY" class = "tdXY">{{ x[1] }}</td>
+		</tr>
+	{% endfor %}
+		
+</table>
+
+<script>
+	var coll = document.getElementsByClassName("collapsible");
+	var i;
+	
+	for (i = 0; i < coll.length; i++) {
+	  coll[i].addEventListener("click", function() {
+		this.classList.toggle("active");
+		var content = this.nextElementSibling;
+		if (content.style.display === "block") {
+		  content.style.display = "none";
+		} else {
+		  content.style.display = "block";
+		}
+	  });
+	}
+</script>
+	
+{% endblock %}
