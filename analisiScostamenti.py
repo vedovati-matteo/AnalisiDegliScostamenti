@@ -1,5 +1,6 @@
 # %%
 import pandas as pd
+pd.options.mode.chained_assignment = None 
 import sqlite3
 import functions as fun
 
@@ -87,7 +88,6 @@ consuntivo = fun.getColonnaGen(volume_costi_c, mix_costi_c, mdU_c, ldU_c, volume
 tabellaScostamenti = (budget, mix_std, mix_eff, consuntivo)
 
 # %% [scostamento volumi]
-
 volumi = ((int(volume_costi_b), int(volume_costi_c)),(int(volume_ricavi_b), int(volume_ricavi_c)))
 delta_volumi = (round(mix_std[2] - budget[2], 2), round(mix_std[4] - budget[4], 2))
 
@@ -95,20 +95,29 @@ delta_volumi = (round(mix_std[2] - budget[2], 2), round(mix_std[4] - budget[4], 
 # costi
 mix_scostamento_c = fun.getScostamentoMix(articoli_c, mix_costi_b, mix_costi_c)
 delta_mix_c = round(mix_eff[2] - mix_std[2], 2)
+# -- grafico
 
 # vendite
 mix_scostamento_v = fun.getScostamentoMix(articoli_v, mix_ricavi_b, mix_ricavi_c)
 delta_mix_v = round(mix_eff[3] - mix_std[3], 2)
+# -- grafico
 
 # %% [scostamento costo MD e LD]
 md_scostamento = fun.getScostamentoMDeLD(articoli_c, mdU_b, mdU_c, df_costo_c['quantita'])
 delta_md = round(consuntivo[0] - mix_eff[0], 2)
+# -- grafico
 
 ld_scostamento = fun.getScostamentoMDeLD(articoli_c, ldU_b, ldU_c, df_costo_c['quantita'])
 delta_ld = round(consuntivo[0] - mix_eff[0], 2)
+# -- grafico
+# -- grafico condiviso MD e LD ?
 
 # %% [valuta / prezzo vendita]
+valuta_scostamento, ricavi_scostamento = fun.getScostamentoValuta(articoli_v, ricaviU_b, ricaviU_c, df_ricavi_c['quantita'], df_ricavi_c['valuta'], df_valuta_b, df_valuta_c)
+# -- grafico
+mix_eff_valutaC = round(valuta_scostamento[0][2] + valuta_scostamento[1][2] + valuta_scostamento[2][2], 2)
 
+delta_valuta = round(mix_eff_valutaC - mix_eff[3], 2)
 
-
-# %% []
+delta_ricavi = round(consuntivo[3] -  mix_eff_valutaC, 2)
+# %%

@@ -2,6 +2,7 @@
 import pandas as pd
 import sqlite3
 import numpy as np
+from pandas.core.frame import DataFrame
  
 
 def getDfCosto(df, conn):
@@ -68,7 +69,7 @@ def getColonnaGen(volumeC, mixC, mdU, ldU, volumeV, mixV, ricaviU, valutaType, v
 
 	MD = mdMix.sum()
 	LD = ldMix.sum()
-
+  
 	volumeMixV = volumeV * mixV
 	rMix = volumeMixV * ricaviU / list(valuta['tassoCambio'].iloc[valutaType - 1])
 
@@ -84,4 +85,125 @@ def getScostamentoMix(articoli, mix_b, mix_c):
 def getScostamentoMDeLD(articoli, b, c, q):
 	df = pd.DataFrame(list(zip(articoli, q, round(q*(c-b), 2), b, round(c - b, 2), c)), columns=['nrArticolo','quantita', 'scostamento', 'budgetU', 'scostamentoU', 'consuntivoU'])
 	return df.sort_values(by='scostamento', key=abs, ascending=False)
+
+def articoloFinale(num_Articolo, tabella_valute_budget, tabella_valute_consuntivo, tabella_costi_budget,
+	tabella_costi_consuntivo, tabella_vendite_budget, tabella_vendite_consuntivo, filtrata = False):
+	#passami articolo e tabelle costi e vendite (sia per budget e consuntivo) e ti ritorno specifiche
+	if not filtrata:
+		tabella_costi_budget = filtroArticolo(num_Articolo, tabella_costi_budget)
+		tabella_costi_consuntivo = filtroArticolo(num_Articolo, tabella_costi_consuntivo)
+		tabella_vendite_budget = filtroArticolo(num_Articolo, tabella_vendite_budget)
+		tabella_vendite_consuntivo = filtroArticolo(num_Articolo, tabella_vendite_consuntivo)
+
+	#costi budget
+	q_prodotta_budget = tabella_costi_budget['quantita'].sum()
+	md_unitario_budget = tabella_costi_budget['md'].sum() / q_prodotta_budget
+	ld_unitario_budget = tabella_costi_budget['ld'].sum() / q_prodotta_budget
+
+	
+	#ricavi budget
+	q_venduta_budget = tabella_vendite_budget['quantita'].sum()
+	prezzo_unitario_budget = (tabella_vendite_budget['ricavo'].sum() / q_venduta_budget) / tabella_valute_budget[tabella_valute_budget.codiceValuta == tabella_vendite_budget['valuta'].iloc[0]]['tassoCambio'].iloc[0]
+
+
+	#costi consuntivo
+	q_prodotta_consuntivo = tabella_costi_consuntivo['quantita'].sum()
+	md_unitario_consuntivo = tabella_costi_consuntivo['md'].sum() / q_prodotta_consuntivo
+	ld_unitario_consuntivo = tabella_costi_consuntivo['ld'].sum() / q_prodotta_consuntivo
+
+	
+	#ricavi consuntivo
+	q_venduta_consuntivo = tabella_vendite_consuntivo['quantita'].sum()
+	prezzo_unitario_consuntivo = (tabella_vendite_consuntivo['ricavo'].sum() / q_venduta_consuntivo) / tabella_valute_consuntivo[tabella_valute_consuntivo.codiceValuta == tabella_vendite_consuntivo['valuta'].iloc[0]]['tassoCambio'].iloc[0]
+
+
+	return ((md_unitario_budget,
+	ld_unitario_budget,
+	q_prodotta_budget, 
+	(md_unitario_budget + ld_unitario_budget) * q_prodotta_budget, #costo_totale_budget
+	q_venduta_budget, 
+	prezzo_unitario_budget,
+	prezzo_unitario_budget * q_venduta_budget), #ricavi_tot_budget
+
+	(ld_unitario_consuntivo,
+	q_prodotta_consuntivo,
+	ld_unitario_consuntivo * q_prodotta_consuntivo, #costo_totale_consuntivo
+	q_venduta_consuntivo, 
+	prezzo_unitario_consuntivo,
+	prezzo_unitario_consuntivo * q_venduta_consuntivo #ricavi_tot_consuntivo
+	))
+
+def filtroArticolo (num_Articolo, tabella):
+	return tabella[tabella.nrArticolo == num_Articolo]
+
+def getValutaName (n_valuta):
+	if n_valuta == 1:
+		return 'EURO'
+	if n_valuta == 2:
+		return 'DOLLAR'
+	if n_valuta == 3:
+		return 'YEN'
+	return 'NO VALUTA'
+
+def getCliente(numArticolo, conn):
+	df = pd.read_sql_query("""
+	SELECT v.nrArticolo, v.BC, v.quantita, v.importoTot, c.valuta, c.numeroCliente
+	FROM Vendita as v
+	JOIN Cliente as c ON (v.nrOrigine = c.numeroCliente)
+	WHERE v.nrArticolo = '{0}'""".format(numArticolo)
+	, conn)
+	return df['numeroCliente'].iloc[0]
+
+
+def getValuta(numArticolo, df_ricavi):
+	return getValutaName(df_ricavi[df_ricavi.nrArticolo == numArticolo]['valuta'].iloc[0])
+
+
+def getScostamenti(df_costo_b, df_costo_c, df_ricavi_b, df_ricavi_c):
+
+	a = pd.merge(df_costo_b, df_ricavi_b, on = 'nrArticolo')[['nrArticolo','costo','ricavo']]
+	b = pd.merge(df_costo_c, df_ricavi_c, on = 'nrArticolo')[['nrArticolo','costo','ricavo']]
+	c = pd.merge(a,b, on='nrArticolo')
+	data = pd.DataFrame(zip( list(c['nrArticolo']), list((c['costo_x'] - c['costo_y']) + (c['ricavo_y'] - c['ricavo_x']))),columns=['nrArticolo','scostamento'])
+
+	return data.sort_values("scostamento", key = abs, ascending=False)
+
+def getScostamentoValuta(articoli, ricaviU_b, ricaviU_c, quantita, tipoValuta, valuta_b, valuta_c):
+	
+	df = pd.DataFrame(zip(articoli, ricaviU_b, ricaviU_c, quantita, tipoValuta), columns=['articolo','rU_b', 'rU_c', 'qta', 'valType'])
+
+	valGroup = df.groupby(df.valType)
+	df_euro = valGroup.get_group(1)
+	df_dollar = valGroup.get_group(2)
+	df_yen = valGroup.get_group(3)
+
+	ricavi_euro_b = df_euro['rU_b'] * df_euro['qta'] / valuta_b['tassoCambio'].iloc[0]
+	ricavi_euro_c = df_euro['rU_b'] * df_euro['qta'] / valuta_c['tassoCambio'].iloc[0]
+	
+	ricavi_dollar_b = df_dollar['rU_b'] * df_dollar['qta'] / valuta_b['tassoCambio'].iloc[1]
+	ricavi_dollar_c = df_dollar['rU_b'] * df_dollar['qta'] / valuta_c['tassoCambio'].iloc[1]
+
+	ricavi_yen_b = df_yen['rU_b'] * df_yen['qta'] / valuta_b['tassoCambio'].iloc[2]
+	ricavi_yen_c = df_yen['rU_b'] * df_yen['qta'] / valuta_c['tassoCambio'].iloc[2]
+
+	risValuta = ((round(ricavi_euro_b.sum(), 2), round(ricavi_euro_c.sum() - ricavi_euro_b.sum(), 2), round(ricavi_euro_c.sum(), 2)),
+		(round(ricavi_dollar_b.sum(), 2), round(ricavi_dollar_c.sum() - ricavi_dollar_b.sum(), 2), round(ricavi_dollar_c.sum(), 2)),
+		(round(ricavi_yen_b.sum(), 2), round(ricavi_yen_c.sum() - ricavi_yen_b.sum(), 2), round(ricavi_yen_c.sum(), 2)))
+
+	df_euro['ricaviU_b'] = df_euro['rU_b'] / valuta_c['tassoCambio'].iloc[0]
+	df_dollar['ricaviU_b'] = df_dollar['rU_b'] / valuta_c['tassoCambio'].iloc[1]
+	df_yen['ricaviU_b'] = df_yen['rU_b'] / valuta_c['tassoCambio'].iloc[2]
+
+	df_euro['ricaviU_c'] = df_euro['rU_c'] / valuta_c['tassoCambio'].iloc[0]
+	df_dollar['ricaviU_c'] = df_dollar['rU_c'] / valuta_c['tassoCambio'].iloc[1]
+	df_yen['ricaviU_c'] = df_yen['rU_c'] / valuta_c['tassoCambio'].iloc[2]
+
+	df_ricavi = pd.concat([df_euro, df_dollar, 	df_yen])
+	df_ricavi = df_ricavi.drop(columns=['rU_b', 'rU_c', 'valType'])
+
+	df_ricavi['ricaviU_scost'] = df_ricavi['ricaviU_c'] - df_ricavi['ricaviU_b']
+	df_ricavi['ricavi_scost'] = df_ricavi['ricaviU_scost'] * df_ricavi['qta']
+
+	return risValuta, df_ricavi.sort_values('ricavi_scost', key=abs, ascending=False)
+
 
