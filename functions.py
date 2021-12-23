@@ -70,7 +70,7 @@ def getColonnaGen(volumeC, mixC, mdU, ldU, volumeV, mixV, ricaviU, valutaType, v
 	MD = mdMix.sum()
 	LD = ldMix.sum()
   
-  volumeMixV = volumeV * mixV
+	volumeMixV = volumeV * mixV
 	rMix = volumeMixV * ricaviU / list(valuta['tassoCambio'].iloc[valutaType - 1])
 
 	R = rMix.sum()
