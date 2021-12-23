@@ -3,7 +3,6 @@
 {% block title %}Lista Finali Articoli{% endblock %}
 
 {% block content %}
-	
 <table id="tabellaScostamenti">
 	<thead>
 		<th>Codice Articolo</th>
@@ -12,13 +11,12 @@
 		
 	{% for x in p %}
 		<tr>
-			<td id="tdXY" class = "tdXY">{{ x[0] }}</td>
+			<td id="tdXY" class = "tdXY"><a href='/articoloSpecifico?codiceArticolo={{ x[0] }}'>{{ x[0] }}</a></td>
 			<td id="tdXY" class = "tdXY">{{ x[1] }}</td>
 		</tr>
 	{% endfor %}
 		
 </table>
-
 <script>
 	var coll = document.getElementsByClassName("collapsible");
 	var i;
