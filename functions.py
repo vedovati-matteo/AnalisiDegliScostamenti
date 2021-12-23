@@ -145,7 +145,7 @@ def getValutaName (n_valuta):
 		return 'YEN'
 	return 'NO VALUTA'
 
-def getCliente(numArticolo):
+def getCliente(numArticolo, conn):
 	df = pd.read_sql_query("""
 	SELECT v.nrArticolo, v.BC, v.quantita, v.importoTot, c.valuta, c.numeroCliente
 	FROM Vendita as v
