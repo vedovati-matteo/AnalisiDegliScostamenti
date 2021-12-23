@@ -168,3 +168,42 @@ def getScostamenti(df_costo_b, df_costo_c, df_ricavi_b, df_ricavi_c):
 
 	return data.sort_values("scostamento", key = abs, ascending=False)
 
+def getScostamentoValuta(articoli, ricaviU_b, ricaviU_c, quantita, tipoValuta, valuta_b, valuta_c):
+	
+	df = pd.DataFrame(zip(articoli, ricaviU_b, ricaviU_c, quantita, tipoValuta), columns=['articolo','rU_b', 'rU_c', 'qta', 'valType'])
+
+	valGroup = df.groupby(df.valType)
+	df_euro = valGroup.get_group(1)
+	df_dollar = valGroup.get_group(2)
+	df_yen = valGroup.get_group(3)
+
+	ricavi_euro_b = df_euro['rU_b'] * df_euro['qta'] / valuta_b['tassoCambio'].iloc[0]
+	ricavi_euro_c = df_euro['rU_b'] * df_euro['qta'] / valuta_c['tassoCambio'].iloc[0]
+	
+	ricavi_dollar_b = df_dollar['rU_b'] * df_dollar['qta'] / valuta_b['tassoCambio'].iloc[1]
+	ricavi_dollar_c = df_dollar['rU_b'] * df_dollar['qta'] / valuta_c['tassoCambio'].iloc[1]
+
+	ricavi_yen_b = df_yen['rU_b'] * df_yen['qta'] / valuta_b['tassoCambio'].iloc[2]
+	ricavi_yen_c = df_yen['rU_b'] * df_yen['qta'] / valuta_c['tassoCambio'].iloc[2]
+
+	risValuta = ((round(ricavi_euro_b.sum(), 2), round(ricavi_euro_c.sum() - ricavi_euro_b.sum(), 2), round(ricavi_euro_c.sum(), 2)),
+		(round(ricavi_dollar_b.sum(), 2), round(ricavi_dollar_c.sum() - ricavi_dollar_b.sum(), 2), round(ricavi_dollar_c.sum(), 2)),
+		(round(ricavi_yen_b.sum(), 2), round(ricavi_yen_c.sum() - ricavi_yen_b.sum(), 2), round(ricavi_yen_c.sum(), 2)))
+
+	df_euro['ricaviU_b'] = df_euro['rU_b'] / valuta_c['tassoCambio'].iloc[0]
+	df_dollar['ricaviU_b'] = df_dollar['rU_b'] / valuta_c['tassoCambio'].iloc[1]
+	df_yen['ricaviU_b'] = df_yen['rU_b'] / valuta_c['tassoCambio'].iloc[2]
+
+	df_euro['ricaviU_c'] = df_euro['rU_c'] / valuta_c['tassoCambio'].iloc[0]
+	df_dollar['ricaviU_c'] = df_dollar['rU_c'] / valuta_c['tassoCambio'].iloc[1]
+	df_yen['ricaviU_c'] = df_yen['rU_c'] / valuta_c['tassoCambio'].iloc[2]
+
+	df_ricavi = pd.concat([df_euro, df_dollar, 	df_yen])
+	df_ricavi = df_ricavi.drop(columns=['rU_b', 'rU_c', 'valType'])
+
+	df_ricavi['ricaviU_scost'] = df_ricavi['ricaviU_c'] - df_ricavi['ricaviU_b']
+	df_ricavi['ricavi_scost'] = df_ricavi['ricaviU_scost'] * df_ricavi['qta']
+
+	return risValuta, df_ricavi.sort_values('ricavi_scost', key=abs, ascending=False)
+
+

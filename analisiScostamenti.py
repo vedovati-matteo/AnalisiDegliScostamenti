@@ -1,5 +1,6 @@
 # %%
 import pandas as pd
+pd.options.mode.chained_assignment = None 
 import sqlite3
 import functions as fun
 
@@ -107,4 +108,11 @@ ld_scostamento = fun.getScostamentoMDeLD(articoli_c, ldU_b, ldU_c, df_costo_c['q
 delta_ld = round(consuntivo[0] - mix_eff[0], 2)
 
 # %% [valuta / prezzo vendita]
+valuta_scostamento, ricavi_scostamento = fun.getScostamentoValuta(articoli_v, ricaviU_b, ricaviU_c, df_ricavi_c['quantita'], df_ricavi_c['valuta'], df_valuta_b, df_valuta_c)
 
+mix_eff_valutaC = round(valuta_scostamento[0][2] + valuta_scostamento[1][2] + valuta_scostamento[2][2], 2)
+
+delta_valuta = round(mix_eff_valutaC - mix_eff[3], 2)
+
+delta_ricavi = round(consuntivo[3] -  mix_eff_valutaC, 2)
+# %%
