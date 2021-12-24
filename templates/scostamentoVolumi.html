@@ -10,12 +10,12 @@
 		<th>Scostamento</th>
 		<th>Consuntivo</th>
 	</thead>
-	{% for x in p %}
+	{% for x in volumi %}
 		<tr>
-			{% if loop.index==1 %}<td id="tdX">Volume Vendita</td>{% endif %}
-			{% if loop.index==2 %}<td id="tdX">Volume Costi</td>{% endif %}
+			{% if loop.index==1 %}<td id="tdX">Volume Costi</td>{% endif %}
+			{% if loop.index==2 %}<td id="tdX">Volume Vendite</td>{% endif %}
 			<td id="tdXY">{{ x[0]|round(2) }}</td>
-			<td id="tdXY">{{ (x[1] - x[0])|round(2) }}</td>
+			<td id="tdXY">{{ (x[1] - x[0])|round(2) }} ({{delta_volumi[loop.index - 1]}}€)</td>
 			<td id="tdXY">{{ x[1]|round(2) }}</td>
 		</tr>
 	{% endfor %}
