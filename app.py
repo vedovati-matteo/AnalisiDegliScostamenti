@@ -2,7 +2,7 @@ from flask import Flask, render_template
 
 app = Flask(__name__)
 
-
+exec(open('analisiScostamenti.py').read())
 
 @app.route("/")
 def index():
@@ -18,7 +18,7 @@ def listaArticoliFinali():
 
 @app.route("/articoloSpecifico")
 def articoloSpecifico():
-    return render_template("articoloSpecifico.html", p=((407000,67840,242200,80000,16960),(366300,61056,217000,80000,7264),(363500,60160,217000,80000,6340),(370000,63920,220780,80000,5300)))
+    return render_template("articoloSpecifico.html", codiceArticolo='ART000045', cliente="pippo", p=(((0.2761111111111111,17.708333333333332,18.0,323.71999999999997,40,36.91869841571008,1476.7479366284033),(17.65463917525773, 97.0, 1712.5, 88, 34.52013674643542, 3037.7720336863167,1516.7479366284033))))
 
 @app.route("/scostamentoVolumi")
 def scostamentoVolumi():
@@ -27,7 +27,3 @@ def scostamentoVolumi():
 
 if __name__ == '__main__':
 	app.run(host='127.0.0.1', port=5000, debug=True)
-
-
-
-    #exec(open('analisiScostamenti.py').read())

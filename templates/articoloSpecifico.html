@@ -13,8 +13,8 @@
 		}
     </script>
 
-<h3>Codice Articolo: <p id="codiceArticolo"></p> </h3>
-<h3>Cliente: <p id="cliente"></p> </h3>
+<h3>Codice Articolo: <p id="codiceArticolo"></p>{{ codiceArticolo }}</h3>
+<h3>Cliente: <p id="cliente"></p> {{ cliente }} </h3>
 
 <table id="tabellaScostamenti">
 	<thead>
@@ -28,20 +28,30 @@
 		<th>Ricavi Totali</th>
 	</thead>
 		
-	{% for x in range(0, 4) %}
+	{% for x in p %}
 		<tr>
-			{% if x==0 %}<td id="tdX">Budget</td>{% endif %}
-			{% if x==1 %}<td id="tdX">Consuntivo</td>{% endif %}
-			{% if x==2 %}<td id="tdX">MOL</td>{% endif %}
+			{% if loop.index==1 %}<td id="tdX">Budget</td>{% endif %}
+			{% if loop.index==2 %}<td id="tdX">Consuntivo</td>{% endif %}
+			{% for y in x %}
+				<td id="tdXY">{{ y|round(2) }}</td>
+			{% endfor %}
+			{% if x==2 %}{% endif %}
 		</tr>
 	{% endfor %}
+	<tr>
+	<td id="tdX">MOL</td>
+	{% for x in range(0, 7) %}
+		<td id="tdXY">{{ (p[1][x] - p[0][x])|round(2) }}</td>
+	{% endfor %}
+	</tr>
+	
 		
 </table>
 
 <button id="buttonBack" onclick="history.back()">Lista Articoli</button>
 
 <script>
-	document.getElementById("codiceArticolo").innerHTML = getCodiceArticolo();
+	//document.getElementById("codiceArticolo").innerHTML = getCodiceArticolo();
 </script>
 
 {% endblock %}
