@@ -12,7 +12,7 @@ def index():
 
 @app.route("/analisiScostamenti")
 def analisiScostamenti():
-    return render_template("analisiScostamenti.html", p=tabellaScostamenti))
+    return render_template("analisiScostamenti.html", p=tabellaScostamenti)
 
 @app.route("/listaArticoliFinali")
 def listaArticoliFinali():
