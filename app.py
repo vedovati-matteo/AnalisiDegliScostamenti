@@ -22,7 +22,7 @@ def articoloSpecifico():
 
 @app.route("/scostamentoVolumi")
 def scostamentoVolumi():
-    return render_template("scostamentoVolumi.html", p=((407000,456000),(456000,407000)))
+    return render_template("scostamentoVolumi.html", volumi = volumi, delta_volumi = delta_volumi)
 
 @app.route("/scostamentoMix")
 def scostamentoMix():
