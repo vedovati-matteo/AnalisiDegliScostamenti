@@ -26,7 +26,11 @@
 			<td id="tdXY" class = "tdXY">{{ p[0][x] }}</td>
 			<td id="tdXY" class = "tdXY" onclick='location.href="/scostamentoVolumi"'>{{ (p[1][x]-p[0][x])|round(2) }} ({{ ((p[1][x]-p[0][x])/p[0][x]*100)|round(2) }}%)</td>
 			<td id="tdXY" class = "tdXY">{{ p[1][x] }}</td>
-			<td id="tdXY" class = "tdXY">{{ (p[2][x]-p[1][x])|round(2) }} ({{ ((p[2][x]-p[1][x])/p[1][x]*100)|round(2) }}%)</td>
+			{% if x==4 %}
+				<td id="tdXY" class = "tdXY">{{ (p[2][x]-p[1][x])|round(2) }} ({{ ((p[2][x]-p[1][x])/p[1][x]*100)|round(2) }}%)</td>
+			{% else %}
+				<td id="tdXY" class = "tdXY" onclick='location.href="/scostamentoMix"'>{{ (p[2][x]-p[1][x])|round(2) }} ({{ ((p[2][x]-p[1][x])/p[1][x]*100)|round(2) }}%)</td>
+			{% endif %}
 			<td id="tdXY" class = "tdXY">{{ p[2][x] }}</td>
 			<td id="tdXY" class = "tdXY">{{ (p[3][x]-p[2][x])|round(2) }} ({{ ((p[3][x]-p[2][x])/p[2][x]*100)|round(2) }}%)</td>
 			<td id="tdXY" class = "tdXY">{{ p[3][x] }}</td>

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Lista Finali Articoli{% endblock %}
+
+{% block content %}
+<table id="tabellaScostamenti">
+	<thead>
+		<th>Codice Articolo</th>
+		<th>Budget</th>
+		<th>Scostamento</th>
+		<th>Consuntivo</th>
+	</thead>
+	{% for x in p %}
+		<tr>
+			{% for y in x %}
+				<td id="tdXY">{{ y }}</td>
+			{% endfor %}
+		</tr>
+	{% endfor %}
+</table>
+
+<button id="buttonBack" onclick="history.back()">Home</button>
+<script>
+	
+</script>
+	
+{% endblock %}
+
