@@ -11,7 +11,7 @@
 		
 	{% for x in p %}
 		<tr>
-			<td id="tdXY" class = "tdXY"><a href='/articoloSpecifico?codiceArticolo={{ x[0] }}'>{{ x[0] }}</a></td>
+			<td id="tdXY" class = "tdXY" onclick='location.href="/articoloSpecifico?codiceArticolo={{ x[0] }}"'>{{ x[0] }}</td>
 			<td id="tdXY" class = "tdXY">{{ x[1] }}</td>
 		</tr>
 	{% endfor %}

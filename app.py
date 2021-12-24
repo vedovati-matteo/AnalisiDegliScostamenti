@@ -6,6 +6,10 @@ exec(open('analisiScostamenti.py').read())
 
 @app.route("/")
 def index():
+    return render_template("index.html")
+
+@app.route("/analisiScostamenti")
+def analisiScostamenti():
     return render_template("home.html", p=tabellaScostamenti)
 
 @app.route("/listaArticoliFinali")
