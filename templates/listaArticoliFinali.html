@@ -8,7 +8,6 @@
 		<th>Codice Articolo</th>
 		<th>Scostamento Finale</th>
 	</thead>
-	{% p.sort() %}
 	{% for x in p %}
 		<tr>
 			<td id="tdXY" class = "tdXY" onclick='location.href="/articoloSpecifico?codiceArticolo={{ x[0] }}"'>{{ x[0] }}</td>

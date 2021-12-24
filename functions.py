@@ -125,9 +125,10 @@ def articoloFinale(num_Articolo, tabella_valute_budget, tabella_valute_consuntiv
 	prezzo_unitario_budget,
 	prezzo_unitario_budget * q_venduta_budget), #ricavi_tot_budget
 
-	(ld_unitario_consuntivo,
+	(md_unitario_consuntivo,
+	ld_unitario_consuntivo,
 	q_prodotta_consuntivo,
-	ld_unitario_consuntivo * q_prodotta_consuntivo, #costo_totale_consuntivo
+	(md_unitario_consuntivo + ld_unitario_consuntivo) * q_prodotta_consuntivo, #costo_totale_consuntivo
 	q_venduta_consuntivo, 
 	prezzo_unitario_consuntivo,
 	prezzo_unitario_consuntivo * q_venduta_consuntivo #ricavi_tot_consuntivo
@@ -145,14 +146,8 @@ def getValutaName (n_valuta):
 		return 'YEN'
 	return 'NO VALUTA'
 
-def getCliente(numArticolo, conn):
-	df = pd.read_sql_query("""
-	SELECT v.nrArticolo, v.BC, v.quantita, v.importoTot, c.valuta, c.numeroCliente
-	FROM Vendita as v
-	JOIN Cliente as c ON (v.nrOrigine = c.numeroCliente)
-	WHERE v.nrArticolo = '{0}'""".format(numArticolo)
-	, conn)
-	return df['numeroCliente'].iloc[0]
+def getCliente(numArticolo, df):
+	return df.query("nrArticolo == '{0}'".format(numArticolo))['numeroCliente'].iloc[0]
 
 
 def getValuta(numArticolo, df_ricavi):
@@ -164,7 +159,7 @@ def getScostamenti(df_costo_b, df_costo_c, df_ricavi_b, df_ricavi_c):
 	a = pd.merge(df_costo_b, df_ricavi_b, on = 'nrArticolo')[['nrArticolo','costo','ricavo']]
 	b = pd.merge(df_costo_c, df_ricavi_c, on = 'nrArticolo')[['nrArticolo','costo','ricavo']]
 	c = pd.merge(a,b, on='nrArticolo')
-	data = pd.DataFrame(zip( list(c['nrArticolo']), list((c['costo_x'] - c['costo_y']) + (c['ricavo_y'] - c['ricavo_x']))),columns=['nrArticolo','scostamento'])
+	data = pd.DataFrame(zip( list(c['nrArticolo']), list(round((c['costo_x'] - c['costo_y']) + (c['ricavo_y'] - c['ricavo_x']), 2))),columns=['nrArticolo','scostamento'])
 
 	return data.sort_values("scostamento", key = abs, ascending=False)
 

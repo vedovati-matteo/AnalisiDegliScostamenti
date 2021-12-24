@@ -4,17 +4,9 @@
 
 {% block content %}
 
-	<script>
-		function getCodiceArticolo()
-		{
-			const urlSplit = window.location.href.split('=');
-			var codiceArticolo = urlSplit[1];
-			return codiceArticolo;
-		}
-    </script>
-
-<h3>Codice Articolo: <p id="codiceArticolo"></p> </h3>
-<h3>Cliente: <p id="cliente"></p> </h3>
+<h3>Codice Articolo: <p id="codiceArticolo">{{ nrArticolo }}</p> </h3>
+<h3>Cliente: {{cliente}} </h3>
+<p>Valuta: {{valuta}}</p>
 
 <table id="tabellaScostamenti">
 	<thead>
@@ -48,9 +40,5 @@
 </table>
 
 <button id="buttonBack" onclick="history.back()">Lista Articoli</button>
-
-<script>
-	document.getElementById("codiceArticolo").innerHTML = getCodiceArticolo();
-</script>
 
 {% endblock %}
