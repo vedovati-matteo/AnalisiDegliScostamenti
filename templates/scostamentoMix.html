@@ -13,7 +13,11 @@
 	{% for x in p %}
 		<tr>
 			{% for y in x %}
-				<td id="tdXY">{{ y }}</td>
+				{% if loop.index==1 %}	
+					<td id="tdXY">{{ y }}</td>
+				{% else %}
+					<td id="tdXY">{{ y }}%</td>
+				{% endif %}
 			{% endfor %}
 		</tr>
 	{% endfor %}

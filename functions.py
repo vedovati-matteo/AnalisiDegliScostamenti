@@ -79,7 +79,7 @@ def getColonnaGen(volumeC, mixC, mdU, ldU, volumeV, mixV, ricaviU, valutaType, v
 
 def getScostamentoMix(articoli, mix_b, mix_c):
 	
-	df_mix = pd.DataFrame(list(zip(articoli, mix_b, mix_c - mix_b, mix_c)), columns=['nrArticolo','budget', 'scostamento', 'consuntivo'])
+	df_mix = pd.DataFrame(list(zip(articoli, round(mix_b * 100, 3), round(mix_c * 100 - mix_b * 100, 3), round(mix_c * 100, 3))), columns=['nrArticolo','budget', 'scostamento', 'consuntivo'])
 	return df_mix.sort_values(by='scostamento', key=abs, ascending=False)
 
 def getScostamentoMDeLD(articoli, b, c, q):
