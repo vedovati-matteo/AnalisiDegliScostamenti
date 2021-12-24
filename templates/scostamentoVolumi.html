@@ -5,13 +5,18 @@
 {% block content %}
 <table id="tabellaScostamenti">
 	<thead>
-		<th>Codice Articolo</th>
-		<th>Scostamento Finale</th>
+		<th></th>
+		<th>Budget</th>
+		<th>Scostamento</th>
+		<th>Consuntivo</th>
 	</thead>
 	{% for x in p %}
 		<tr>
-			<td id="tdXY" class = "tdXY" onclick='location.href="/articoloSpecifico?codiceArticolo={{ x[0] }}"'>{{ x[0] }}</td>
-			<td id="tdXY" class = "tdXY">{{ x[1] }}</td>
+			{% if loop.index==1 %}<td id="tdX">Volume Vendita</td>{% endif %}
+			{% if loop.index==2 %}<td id="tdX">Volume Costi</td>{% endif %}
+			<td id="tdXY">{{ x[0]|round(2) }}</td>
+			<td id="tdXY">{{ (x[1] - x[0])|round(2) }}</td>
+			<td id="tdXY">{{ x[1]|round(2) }}</td>
 		</tr>
 	{% endfor %}
 </table>
