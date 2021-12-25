@@ -108,7 +108,7 @@ delta_md = round(consuntivo[0] - mix_eff[0], 2)
 # -- grafico
 
 ld_scostamento = fun.getScostamentoMDeLD(articoli_c, ldU_b, ldU_c, df_costo_c['quantita'])
-delta_ld = round(consuntivo[0] - mix_eff[0], 2)
+delta_ld = round(consuntivo[1] - mix_eff[1], 2)
 # -- grafico
 # -- grafico condiviso MD e LD ?
 

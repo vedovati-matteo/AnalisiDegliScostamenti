@@ -1,23 +1,22 @@
 {% extends "base.html" %}
 
-{% block title %}Scostamento Mix{% endblock %}
+{% block title %}Scostamento {{t}}{% endblock %}
 
 {% block content %}
+<h3>Delta: {{ delta }}€</h3>
 <table id="tabellaScostamenti">
 	<thead>
 		<th>Codice Articolo</th>
-		<th>Budget</th>
+		<th>Quantita</th>
 		<th>Scostamento</th>
-		<th>Consuntivo</th>
+		<th>Budget Unitario</th>
+		<th>Scostamento Unitario</th>
+		<th>Consuntivo Unitario</th>
 	</thead>
 	{% for x in p %}
 		<tr>
 			{% for y in x %}
-				{% if loop.index==1 %}	
-					<td id="tdXY">{{ y }}</td>
-				{% else %}
-					<td id="tdXY">{{ y }}%</td>
-				{% endif %}
+				<td id="tdXY">{{ y }}</td>
 			{% endfor %}
 		</tr>
 	{% endfor %}

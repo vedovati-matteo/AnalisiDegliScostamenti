@@ -121,16 +121,16 @@ def articoloFinale(num_Articolo, tabella_valute_budget, tabella_valute_consuntiv
 	ld_unitario_budget,
 	q_prodotta_budget, 
 	(md_unitario_budget + ld_unitario_budget) * q_prodotta_budget, #costo_totale_budget
-	q_venduta_budget, 
 	prezzo_unitario_budget,
+	q_venduta_budget, 
 	prezzo_unitario_budget * q_venduta_budget), #ricavi_tot_budget
 
 	(md_unitario_consuntivo,
 	ld_unitario_consuntivo,
 	q_prodotta_consuntivo,
 	(md_unitario_consuntivo + ld_unitario_consuntivo) * q_prodotta_consuntivo, #costo_totale_consuntivo
-	q_venduta_consuntivo, 
 	prezzo_unitario_consuntivo,
+	q_venduta_consuntivo, 
 	prezzo_unitario_consuntivo * q_venduta_consuntivo #ricavi_tot_consuntivo
 	))
 
@@ -199,6 +199,6 @@ def getScostamentoValuta(articoli, ricaviU_b, ricaviU_c, quantita, tipoValuta, v
 	df_ricavi['ricaviU_scost'] = df_ricavi['ricaviU_c'] - df_ricavi['ricaviU_b']
 	df_ricavi['ricavi_scost'] = df_ricavi['ricaviU_scost'] * df_ricavi['qta']
 
-	return risValuta, df_ricavi.sort_values('ricavi_scost', key=abs, ascending=False)
+	return risValuta, df_ricavi.sort_values('ricavi_scost', key=abs, ascending=False)[['articolo', 'qta', 'ricavi_scost', 'ricaviU_b', 'ricaviU_c', 'ricaviU_scost']]
 
 

@@ -37,5 +37,18 @@ def scostamentoMixCosto():
 def scostamentoMixVendita():
     return render_template("scostamentoMix.html", p=mix_scostamento_v.values.tolist())
 
+@app.route("/scostamentoMD")
+def scostamentoMD():
+    return render_template("scostamentoDiretto.html", t='Materiale Diretto',delta = delta_md, p=md_scostamento.values.tolist())
+
+@app.route("/scostamentoLD")
+def scostamentoLD():
+    return render_template("scostamentoDiretto.html", t='Lavoro Diretto',delta = delta_ld, p=ld_scostamento.values.tolist())
+
+@app.route("/scostamentoPrezzo")
+def scostamentoPrezzo():
+    return render_template("scostamentoPrezzo.html",delta = (delta_valuta, delta_ricavi), v=valuta_scostamento, p=ricavi_scostamento.values.tolist())
+
+
 if __name__ == '__main__':
 	app.run(host='127.0.0.1', port=5000, debug=True)

@@ -34,7 +34,15 @@
 			<td id="tdXY" class = "tdXY">{{ (p[2][x]-p[1][x])|round(2) }} ({{ ((p[2][x]-p[1][x])/p[1][x]*100)|round(2) }}%)</td>
 			{% endif %}
 			<td id="tdXY" class = "tdXY">{{ p[2][x] }}</td>
-			<td id="tdXY" class = "tdXY">{{ (p[3][x]-p[2][x])|round(2) }} ({{ ((p[3][x]-p[2][x])/p[2][x]*100)|round(2) }}%)</td>
+			{% if x == 0 %}
+				<td id="tdXY" class = "tdXY" onclick='location.href="/scostamentoMD"'>{{ (p[3][x]-p[2][x])|round(2) }} ({{ ((p[3][x]-p[2][x])/p[2][x]*100)|round(2) }}%)</td>
+			{% elif x == 1 %}
+				<td id="tdXY" class = "tdXY" onclick='location.href="/scostamentoLD"'>{{ (p[3][x]-p[2][x])|round(2) }} ({{ ((p[3][x]-p[2][x])/p[2][x]*100)|round(2) }}%)</td>
+			{% elif x == 3 %}
+				<td id="tdXY" class = "tdXY" onclick='location.href="/scostamentoPrezzo"'>{{ (p[3][x]-p[2][x])|round(2) }} ({{ ((p[3][x]-p[2][x])/p[2][x]*100)|round(2) }}%)</td>
+			{% else %}
+				<td id="tdXY" class = "tdXY">{{ (p[3][x]-p[2][x])|round(2) }} ({{ ((p[3][x]-p[2][x])/p[2][x]*100)|round(2) }}%)</td>
+			{% endif %}
 			<td id="tdXY" class = "tdXY">{{ p[3][x] }}</td>
 		</tr>
 	{% endfor %}
