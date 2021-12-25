@@ -31,11 +31,11 @@ def scostamentoVolumi():
 
 @app.route("/scostamentoMixCosto")
 def scostamentoMixCosto():
-    return render_template("scostamentoMix.html", p=mix_scostamento_c.values.tolist())
+    return render_template("scostamentoMix.html", t='Costi', p=mix_scostamento_c.values.tolist())
 
 @app.route("/scostamentoMixVendita")
 def scostamentoMixVendita():
-    return render_template("scostamentoMix.html", p=mix_scostamento_v.values.tolist())
+    return render_template("scostamentoMix.html", t='Ricavi', p=mix_scostamento_v.values.tolist())
 
 @app.route("/scostamentoMD")
 def scostamentoMD():

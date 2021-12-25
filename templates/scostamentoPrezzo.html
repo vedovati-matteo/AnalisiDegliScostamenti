@@ -3,7 +3,10 @@
 {% block title %}Scostamento Prezzo{% endblock %}
 
 {% block content %}
+<h1>Scostamento Ricavi</h1>
+<p>Lo scostamento in questione non è tutto attribuibile al delta dei ricavi, una parte deve essere attribuita al discostamento di valuta, il quale non è controllabile.</p>
 <h3>Delta completo: {{ (delta[0] + delta[1])| round(2) }}€</h3>
+<h2>Scostamento Valuta:</h2>
 <h3>Delta valuta: {{delta[0]}}</h3>
 <table id="tabellaScostamenti">
 	<thead>
@@ -24,7 +27,9 @@
 	{% endfor %}
 </table>
 
+<h2>Scostamento Ricavi:</h2>
 <h3>Delta ricavi: {{delta[1] }}</h3>
+<div id='graficoRicavi' class='grafico'></div>
 <table id="tabella">
 	<thead>
 		<td>Codice Articolo</td>
@@ -42,6 +47,33 @@
 		</tr>
 	{% endfor %}
 </table>
-	
+
+<script>
+
+	var x = [{% for x in p %}
+		{{ x[4] }},
+	{% endfor %}];
+
+	var trace = {
+		x: x,
+		type: 'histogram',
+		nbinsx: 70,
+		marker: {
+		color: 'rgba(159, 168, 218,0.7)',
+		},
+	};
+
+	var data = [trace];
+
+	var layout = {
+		title: 'Istogramma Scostamento Ricavi Unitari',
+		showlegend: false,
+		bargap: 0.02,
+	};
+
+	Plotly.newPlot('graficoRicavi', data, layout, {staticPlot: true});
+
+</script>
+
 {% endblock %}
 

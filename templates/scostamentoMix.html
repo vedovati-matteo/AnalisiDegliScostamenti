@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 
-{% block title %}Scostamento Mix{% endblock %}
+{% block title %}Scostamento Mix {{t}}{% endblock %}
 
 {% block content %}
+<h1>Scostamento Mix {{t}}</h1>
+<div id='graficoMix' class='grafico'></div>
 <table id="tabella">
 	<thead>
 		<td>Codice Articolo</td>
@@ -23,6 +25,32 @@
 	{% endfor %}
 </table>
 
+<script>
+
+	var x = [{% for x in p %}
+		{{ x[2] }},
+	{% endfor %}];
+
+	var trace = {
+		x: x,
+		type: 'histogram',
+		nbinsx: 70,
+		marker: {
+		color: 'rgba(159, 168, 218,0.7)',
+		},
+	};
+
+	var data = [trace];
+
+	var layout = {
+		title: 'Istogramma Scostamenti Mix',
+		showlegend: false,
+		bargap: 0.02,
+	};
+
+	Plotly.newPlot('graficoMix', data, layout, {staticPlot: true});
+
+</script>
 	
 {% endblock %}
 

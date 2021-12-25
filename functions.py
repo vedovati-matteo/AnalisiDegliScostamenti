@@ -199,6 +199,8 @@ def getScostamentoValuta(articoli, ricaviU_b, ricaviU_c, quantita, tipoValuta, v
 	df_ricavi['ricaviU_scost'] = df_ricavi['ricaviU_c'] - df_ricavi['ricaviU_b']
 	df_ricavi['ricavi_scost'] = df_ricavi['ricaviU_scost'] * df_ricavi['qta']
 
-	return risValuta, df_ricavi.sort_values('ricavi_scost', key=abs, ascending=False)[['articolo', 'qta', 'ricavi_scost', 'ricaviU_b', 'ricaviU_c', 'ricaviU_scost']]
+	df_sorted = df_ricavi.sort_values('ricavi_scost', key=abs, ascending=False)[['articolo', 'qta', 'ricavi_scost', 'ricaviU_b', 'ricaviU_scost', 'ricaviU_c']]
+
+	return risValuta, df_sorted
 
 

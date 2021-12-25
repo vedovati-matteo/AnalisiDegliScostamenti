@@ -3,6 +3,8 @@
 {% block title %}Scostamento {{t}}{% endblock %}
 
 {% block content %}
+<h1>Scostamento {{t}}</h1>
+<div id='graficoDiretto' class='grafico'></div>
 <h3>Delta: {{ delta }}€</h3>
 <table id="tabella">
 	<thead>
@@ -21,6 +23,33 @@
 		</tr>
 	{% endfor %}
 </table>
+
+<script>
+
+	var x = [{% for x in p %}
+		{{ x[4] }},
+	{% endfor %}];
+
+	var trace = {
+		x: x,
+		type: 'histogram',
+		nbinsx: 70,
+		marker: {
+		color: 'rgba(159, 168, 218,0.7)',
+		},
+	};
+
+	var data = [trace];
+
+	var layout = {
+		title: 'Istogramma Scostamento {{t}} Unitario',
+		showlegend: false,
+		bargap: 0.02,
+	};
+
+	Plotly.newPlot('graficoDiretto', data, layout, {staticPlot: true});
+
+</script>
 
 	
 {% endblock %}
