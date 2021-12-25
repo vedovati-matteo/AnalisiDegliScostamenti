@@ -1,12 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %}Lista Finali Articoli{% endblock %}
+{% block title %}Lista Articoli Fianli{% endblock %}
 
 {% block content %}
-<table id="tabellaScostamenti">
+<h1>Lista Articoli Finali</h1>
+<table id="tabella">
 	<thead>
-		<th>Codice Articolo</th>
-		<th>Scostamento Finale</th>
+		<td>Codice Articolo</td>
+		<td>Scostamento Finale</td>
 	</thead>
 	{% for x in p %}
 		<tr>
@@ -16,9 +17,5 @@
 	{% endfor %}
 </table>
 
-<button id="buttonBack" onclick="history.back()">Home</button>
-<script>
-	
-</script>
 	
 {% endblock %}

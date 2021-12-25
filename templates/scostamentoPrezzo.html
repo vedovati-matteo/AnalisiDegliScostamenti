@@ -7,10 +7,10 @@
 <h3>Delta valuta: {{delta[0]}}</h3>
 <table id="tabellaScostamenti">
 	<thead>
-		<th></th>
-		<th>Budget</th>
-		<th>Scostamento</th>
-		<th>Consuntivo</th>
+		<td></td>
+		<td>Budget</td>
+		<td>Scostamento</td>
+		<td>Consuntivo</td>
 	</thead>
 	{% for x in range(0, 3) %}
 		<tr>
@@ -25,14 +25,14 @@
 </table>
 
 <h3>Delta ricavi: {{delta[1] }}</h3>
-<table id="tabellaScostamenti">
+<table id="tabella">
 	<thead>
-		<th>Codice Articolo</th>
-		<th>Quantita</th>
-		<th>Scostamento</th>
-		<th>Budget Unitario</th>
-		<th>Scostamento Unitario</th>
-		<th>Consuntivo Unitario</th>
+		<td>Codice Articolo</td>
+		<td>Quantita</td>
+		<td>Scostamento</td>
+		<td>Budget Unitario</td>
+		<td>Scostamento Unitario</td>
+		<td>Consuntivo Unitario</td>
 	</thead>
 	{% for x in p %}
 		<tr>
@@ -42,11 +42,6 @@
 		</tr>
 	{% endfor %}
 </table>
-
-<button id="buttonBack" onclick="history.back()">Home</button>
-<script>
-	
-</script>
 	
 {% endblock %}
 

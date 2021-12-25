@@ -3,12 +3,12 @@
 {% block title %}Scostamento Mix{% endblock %}
 
 {% block content %}
-<table id="tabellaScostamenti">
+<table id="tabella">
 	<thead>
-		<th>Codice Articolo</th>
-		<th>Budget</th>
-		<th>Scostamento</th>
-		<th>Consuntivo</th>
+		<td>Codice Articolo</td>
+		<td>Budget</td>
+		<td>Scostamento</td>
+		<td>Consuntivo</td>
 	</thead>
 	{% for x in p %}
 		<tr>
@@ -23,10 +23,6 @@
 	{% endfor %}
 </table>
 
-<button id="buttonBack" onclick="history.back()">Home</button>
-<script>
-	
-</script>
 	
 {% endblock %}
 

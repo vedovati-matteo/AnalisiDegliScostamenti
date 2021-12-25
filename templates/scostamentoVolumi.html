@@ -5,10 +5,10 @@
 {% block content %}
 <table id="tabellaScostamenti">
 	<thead>
-		<th></th>
-		<th>Budget</th>
-		<th>Scostamento</th>
-		<th>Consuntivo</th>
+		<td></td>
+		<td>Budget</td>
+		<td>Scostamento</td>
+		<td>Consuntivo</td>
 	</thead>
 	{% for x in volumi %}
 		<tr>
@@ -21,9 +21,5 @@
 	{% endfor %}
 </table>
 
-<button id="buttonBack" onclick="history.back()">Home</button>
-<script>
-	
-</script>
 	
 {% endblock %}

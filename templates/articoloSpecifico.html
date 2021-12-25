@@ -4,20 +4,19 @@
 
 {% block content %}
 
-<h3>Codice Articolo: <p id="codiceArticolo">{{ nrArticolo }}</p> </h3>
-<h3>Cliente: {{cliente}} </h3>
-<p>Valuta: {{valuta}}</p>
+<h1>Codice Articolo: <p id="codiceArticolo">{{ nrArticolo }}</p> </h1>
+<h3>Cliente: {{cliente}} ({{valuta}})</h3>
 
 <table id="tabellaScostamenti">
 	<thead>
-		<th></th>
-		<th>Materiale Diretto</th>
-		<th>Lavoro Diretto</th>
-		<th>Quantita'</th>
-		<th>Costo Totale</th>
-		<th>Prezzo Unitario</th>
-		<th>Quantita' Venduta</th>
-		<th>Ricavi Totali</th>
+		<td></td>
+		<td>Materiale Diretto</td>
+		<td>Lavoro Diretto</td>
+		<td>Quantita'</td>
+		<td>Costo Totale</td>
+		<td>Prezzo Unitario</td>
+		<td>Quantita' Venduta</td>
+		<td>Ricavi Totali</td>
 	</thead>
 		
 	{% for x in p %}
@@ -40,5 +39,4 @@
 		
 </table>
 
-<button id="buttonBack" onclick="history.back()">Lista Articoli</button>
 {% endblock %}
