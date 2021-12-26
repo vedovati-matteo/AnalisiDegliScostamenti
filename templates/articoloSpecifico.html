@@ -24,7 +24,11 @@
 			{% if loop.index==1 %}<td id="tdX">Budget</td>{% endif %}
 			{% if loop.index==2 %}<td id="tdX">Consuntivo</td>{% endif %}
 			{% for y in x %}
-				<td id="tdXY">{{ y|round(2) }}</td>
+				{% if (loop.index == 3 or loop.index == 6) %}
+					<td id="tdXY">{{ y|round(2) }}</td>
+				{% else %}
+					<td id="tdXY">{{ y|round(2) }}€</td>
+				{% endif %}
 			{% endfor %}
 			{% if x==2 %}{% endif %}
 		</tr>
