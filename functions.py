@@ -86,6 +86,10 @@ def getScostamentoMDeLD(articoli, b, c, q):
 	df = pd.DataFrame(list(zip(articoli, q, round(q*(c-b), 2), round(b, 2), round(c - b, 2), round(c, 2))), columns=['nrArticolo','quantita', 'scostamento', 'budgetU', 'scostamentoU', 'consuntivoU'])
 	return df.sort_values(by='scostamento', key=abs, ascending=False)
 
+def getScostamentoCosti(articoli, b_md, c_md, b_ld, c_ld):
+	df = pd.DataFrame(list(zip(articoli, round(c_md - b_md, 2), round(c_ld - b_ld, 2))), columns=['nrArticolo','md', 'ld'])
+	return df
+
 def articoloFinale(num_Articolo, tabella_valute_budget, tabella_valute_consuntivo, tabella_costi_budget,
 	tabella_costi_consuntivo, tabella_vendite_budget, tabella_vendite_consuntivo, filtrata = False):
 	#passami articolo e tabelle costi e vendite (sia per budget e consuntivo) e ti ritorno specifiche

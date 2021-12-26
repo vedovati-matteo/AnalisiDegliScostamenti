@@ -45,6 +45,10 @@ def scostamentoMD():
 def scostamentoLD():
     return render_template("scostamentoDiretto.html", t='Lavoro Diretto',delta = delta_ld, p=ld_scostamento.values.tolist())
 
+@app.route("/scostamentoCosti")
+def scostamentoCosti():
+    return render_template("scostamentoCostiTotali.html", delta = delta_costi, p=costi_scostamento.values.tolist())
+
 @app.route("/scostamentoPrezzo")
 def scostamentoPrezzo():
     return render_template("scostamentoPrezzo.html",delta = (delta_valuta, delta_ricavi), v=valuta_scostamento, p=ricavi_scostamento.values.tolist())

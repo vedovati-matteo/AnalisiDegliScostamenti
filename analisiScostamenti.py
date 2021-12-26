@@ -110,6 +110,8 @@ delta_md = round(consuntivo[0] - mix_eff[0], 2)
 ld_scostamento = fun.getScostamentoMDeLD(articoli_c, ldU_b, ldU_c, df_costo_c['quantita'])
 delta_ld = round(consuntivo[1] - mix_eff[1], 2)
 # -- grafico
+delta_costi = round(delta_md + delta_ld, 2)
+costi_scostamento = fun.getScostamentoCosti(articoli_c, mdU_b, mdU_c, ldU_b, ldU_c)
 # -- grafico condiviso MD e LD ?
 
 # %% [valuta / prezzo vendita]

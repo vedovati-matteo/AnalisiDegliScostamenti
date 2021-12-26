@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Scostamento {{t}}{% endblock %}
+
+{% block content %}
+<h1>Scostamento Costi</h1>
+<h3>Delta: {{ delta }}€</h3>
+<div id='graficoDiretto' class='grafico'></div>
+
+<script>
+
+	var x1 = [{% for x in p %}
+		{{ x[1] }},
+	{% endfor %}];
+
+	var x2 = [{% for x in p %}
+		{{ x[2] }},
+	{% endfor %}];
+
+	var trace1 = {
+		x: x1,
+		type: 'histogram',
+		opacity: 0.5,
+		nbinsx: 100,
+		name: 'Materiale Diretto', 
+		marker: {
+			color: '#FF8A65',
+		},
+	};
+
+	var trace2 = {
+		x: x2,
+		type: 'histogram',
+		opacity: 0.5,
+		nbinsx: 100,
+		name: 'Lavoro Diretto',
+		marker: {
+			color: '#7986CB',
+		},
+	};
+
+	var data = [trace1, trace2];
+
+	var layout = {
+		title: 'Istogramma Scostamento Costi Unitari',
+		barmode: "overlay",
+		bargap: 0.02,
+	};
+
+	Plotly.newPlot('graficoDiretto', data, layout, {staticPlot: true});
+
+</script>
+
+	
+{% endblock %}
+
