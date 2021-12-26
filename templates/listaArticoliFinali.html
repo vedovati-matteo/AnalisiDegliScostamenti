@@ -10,9 +10,9 @@
 		<td>Scostamento Finale</td>
 	</thead>
 	{% for x in p %}
-		<tr>
-			<td id="tdXY" class = "tdXY" onclick='location.href="/articoloSpecifico?codiceArticolo={{ x[0] }}"'>{{ x[0] }}</td>
-			<td id="tdXY" class = "tdXY">{{ x[1] }}</td>
+		<tr class="clickList" onclick='location.href="/articoloSpecifico?codiceArticolo={{ x[0] }}"'>
+			<td id="tdXY">{{ x[0] }}</td>
+			<td id="tdXY">{{ x[1] }}€</td>
 		</tr>
 	{% endfor %}
 </table>

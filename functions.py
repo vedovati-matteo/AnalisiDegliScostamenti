@@ -83,7 +83,7 @@ def getScostamentoMix(articoli, mix_b, mix_c):
 	return df_mix.sort_values(by='scostamento', key=abs, ascending=False)
 
 def getScostamentoMDeLD(articoli, b, c, q):
-	df = pd.DataFrame(list(zip(articoli, q, round(q*(c-b), 2), b, round(c - b, 2), c)), columns=['nrArticolo','quantita', 'scostamento', 'budgetU', 'scostamentoU', 'consuntivoU'])
+	df = pd.DataFrame(list(zip(articoli, q, round(q*(c-b), 2), round(b, 2), round(c - b, 2), round(c, 2))), columns=['nrArticolo','quantita', 'scostamento', 'budgetU', 'scostamentoU', 'consuntivoU'])
 	return df.sort_values(by='scostamento', key=abs, ascending=False)
 
 def articoloFinale(num_Articolo, tabella_valute_budget, tabella_valute_consuntivo, tabella_costi_budget,
@@ -185,19 +185,19 @@ def getScostamentoValuta(articoli, ricaviU_b, ricaviU_c, quantita, tipoValuta, v
 		(round(ricavi_dollar_b.sum(), 2), round(ricavi_dollar_c.sum() - ricavi_dollar_b.sum(), 2), round(ricavi_dollar_c.sum(), 2)),
 		(round(ricavi_yen_b.sum(), 2), round(ricavi_yen_c.sum() - ricavi_yen_b.sum(), 2), round(ricavi_yen_c.sum(), 2)))
 
-	df_euro['ricaviU_b'] = df_euro['rU_b'] / valuta_c['tassoCambio'].iloc[0]
-	df_dollar['ricaviU_b'] = df_dollar['rU_b'] / valuta_c['tassoCambio'].iloc[1]
-	df_yen['ricaviU_b'] = df_yen['rU_b'] / valuta_c['tassoCambio'].iloc[2]
+	df_euro['ricaviU_b'] = round(df_euro['rU_b'] / valuta_c['tassoCambio'].iloc[0], 2)
+	df_dollar['ricaviU_b'] = round(df_dollar['rU_b'] / valuta_c['tassoCambio'].iloc[1], 2)
+	df_yen['ricaviU_b'] = round(df_yen['rU_b'] / valuta_c['tassoCambio'].iloc[2], 2)
 
-	df_euro['ricaviU_c'] = df_euro['rU_c'] / valuta_c['tassoCambio'].iloc[0]
-	df_dollar['ricaviU_c'] = df_dollar['rU_c'] / valuta_c['tassoCambio'].iloc[1]
-	df_yen['ricaviU_c'] = df_yen['rU_c'] / valuta_c['tassoCambio'].iloc[2]
+	df_euro['ricaviU_c'] = round(df_euro['rU_c'] / valuta_c['tassoCambio'].iloc[0], 2)
+	df_dollar['ricaviU_c'] = round(df_dollar['rU_c'] / valuta_c['tassoCambio'].iloc[1], 2)
+	df_yen['ricaviU_c'] = round(df_yen['rU_c'] / valuta_c['tassoCambio'].iloc[2], 2)
 
 	df_ricavi = pd.concat([df_euro, df_dollar, 	df_yen])
 	df_ricavi = df_ricavi.drop(columns=['rU_b', 'rU_c', 'valType'])
 
-	df_ricavi['ricaviU_scost'] = df_ricavi['ricaviU_c'] - df_ricavi['ricaviU_b']
-	df_ricavi['ricavi_scost'] = df_ricavi['ricaviU_scost'] * df_ricavi['qta']
+	df_ricavi['ricaviU_scost'] = round(df_ricavi['ricaviU_c'] - df_ricavi['ricaviU_b'], 2)
+	df_ricavi['ricavi_scost'] = round(df_ricavi['ricaviU_scost'] * df_ricavi['qta'], 2)
 
 	df_sorted = df_ricavi.sort_values('ricavi_scost', key=abs, ascending=False)[['articolo', 'qta', 'ricavi_scost', 'ricaviU_b', 'ricaviU_scost', 'ricaviU_c']]
 
