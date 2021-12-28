@@ -36,7 +36,11 @@
 	<tr>
 	<td id="tdX">MOL</td>
 	{% for x in range(0, 7) %}
-		<td id="tdXY">{{ (p[1][x] - p[0][x])|round(2) }}</td>
+		<td id="tdXY">{{ (p[1][x] - p[0][x])|round(2) }}
+			{% if loop.index == 1 or loop.index == 2 or loop.index == 4 or loop.index == 5 or loop.index == 7 %}
+			€
+			{% endif %}
+		</td>
 	{% endfor %}
 	</tr>
 	
