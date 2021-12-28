@@ -38,7 +38,7 @@
 	<td id="tdX">Scostamento</td>
 	{% for x in range(0, 8) %}
 		<td id="tdXY">{{ (p[1][x] - p[0][x])|round(2) }}
-			{% if loop.index == 1 or loop.index == 2 or loop.index == 4 or loop.index == 5 or loop.index == 7 %}
+			{% if loop.index == 1 or loop.index == 2 or loop.index == 4 or loop.index == 5 or loop.index == 7 or loop.index == 8 %}
 			€
 			{% endif %}
 		</td>
