@@ -123,7 +123,7 @@ delta_valuta = round(mix_eff_valutaC - mix_eff[3], 2)
 
 delta_ricavi = round(consuntivo[3] -  mix_eff_valutaC, 2)
 # %% [selezione di articoli specifici]
-artScost = fun.getScostamenti(df_costo_b, df_costo_c, df_ricavi_b, df_ricavi_c)
+artScost = fun.getScostamenti(df_costo_b, df_costo_c, df_ricavi_b, df_ricavi_c, df_valuta_b, df_valuta_c)
 
 df_articoli = pd.read_sql_query("""
 SELECT v.nrArticolo, c.numeroCliente
