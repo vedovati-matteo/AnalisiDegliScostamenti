@@ -127,7 +127,8 @@ def articoloFinale(num_Articolo, tabella_valute_budget, tabella_valute_consuntiv
 	(md_unitario_budget + ld_unitario_budget) * q_prodotta_budget, #costo_totale_budget
 	prezzo_unitario_budget,
 	q_venduta_budget, 
-	prezzo_unitario_budget * q_venduta_budget), #ricavi_tot_budget
+	prezzo_unitario_budget * q_venduta_budget,  #ricavi_tot_budget
+	prezzo_unitario_budget * q_venduta_budget - (md_unitario_budget + ld_unitario_budget) * q_prodotta_budget),
 
 	(md_unitario_consuntivo,
 	ld_unitario_consuntivo,
@@ -135,7 +136,8 @@ def articoloFinale(num_Articolo, tabella_valute_budget, tabella_valute_consuntiv
 	(md_unitario_consuntivo + ld_unitario_consuntivo) * q_prodotta_consuntivo, #costo_totale_consuntivo
 	prezzo_unitario_consuntivo,
 	q_venduta_consuntivo, 
-	prezzo_unitario_consuntivo * q_venduta_consuntivo #ricavi_tot_consuntivo
+	prezzo_unitario_consuntivo * q_venduta_consuntivo, #ricavi_tot_consuntivo
+	prezzo_unitario_consuntivo * q_venduta_consuntivo - (md_unitario_consuntivo + ld_unitario_consuntivo) * q_prodotta_consuntivo
 	))
 
 def filtroArticolo (num_Articolo, tabella):
