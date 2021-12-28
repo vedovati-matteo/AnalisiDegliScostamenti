@@ -162,10 +162,10 @@ def getValuta(numArticolo, df_ricavi):
 
 def getScostamenti(df_costo_b, df_costo_c, df_ricavi_b, df_ricavi_c, df_valuta_b, df_valuta_c):
 
-	ricavi_b = df_ricavi_b
+	ricavi_b = df_ricavi_b.copy()
 	ricavi_b['ricavo'] = ricavi_b['ricavo'] / list(df_valuta_b['tassoCambio'].iloc[ricavi_b['valuta']-1])
 
-	ricavi_c = df_ricavi_c
+	ricavi_c = df_ricavi_c.copy()
 	ricavi_c['ricavo'] = ricavi_c['ricavo'] / list(df_valuta_c['tassoCambio'].iloc[ricavi_c['valuta']-1])
 
 	a = pd.merge(df_costo_b, ricavi_b, on = 'nrArticolo')[['nrArticolo','costo','ricavo']]
