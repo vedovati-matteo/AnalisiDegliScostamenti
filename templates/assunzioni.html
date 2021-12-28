@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Analisi Degli Scostamenti{% endblock %}
+
+{% block content %}
+<h1>Assunzioni</h1>
+<p>Assunzioni svolte durante l'analisi della struttura dei dati</p>
+<ul>
+	<li>Un articolo finale avente solo il budget o consuntivo non verranno considerati (devono presentarsi in entrambi).</li>
+	<li>Se la produzione di un articolo ha come output totale 0 in un ordine di produzione, lo consideriamo come un errore di produzione che ha causato la perdita di materie prime e materiale prodotto (quindi un costo senza guadagno).</li>
+	<li>L’ analisi degli scostamenti è focalizzata sui singoli articoli.</li>
+	<li>Nella vendita il ricavo è considerato in valuta locale del cliente.</li>
+	<li>Gli articoli ART0004084 e ART0004146 sono eliminati poichè la quantità di prodotto in impiego orario risorse è pari a 0 in tutti gli ordini di produzione.</li>
+</ul>
+
+{% endblock %}

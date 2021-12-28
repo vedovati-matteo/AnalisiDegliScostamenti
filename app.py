@@ -53,6 +53,10 @@ def scostamentoCosti():
 def scostamentoPrezzo():
     return render_template("scostamentoPrezzo.html",delta = (delta_valuta, delta_ricavi), v=valuta_scostamento, p=ricavi_scostamento.values.tolist())
 
+@app.route("/assunzioni")
+def assunzioni():
+    return render_template("assunzioni.html",delta = (delta_valuta, delta_ricavi), v=valuta_scostamento, p=ricavi_scostamento.values.tolist())
+
 
 if __name__ == '__main__':
 	app.run(host='127.0.0.1', port=5000, debug=True)
