@@ -9,7 +9,7 @@
 <table id="tabella">
 	<thead>
 		<td>Codice Articolo</td>
-		<td>Quantita</td>
+		<td>Quantità</td>
 		<td>Scostamento</td>
 		<td>Budget Unitario</td>
 		<td>Scostamento Unitario</td>
@@ -18,7 +18,7 @@
 	{% for x in p %}
 		<tr>
 			{% for y in x %}
-				<td id="tdXY">{{ y }}</td>
+				<td id="tdXY">{{ y }}{% if loop.index >= 3 %}€{% endif %}</td>
 			{% endfor %}
 		</tr>
 	{% endfor %}
