@@ -5,12 +5,15 @@
 {% block content %}
 <h1>Assunzioni</h1>
 <p>Assunzioni svolte durante l'analisi della struttura dei dati</p>
-<ul>
+<ul style="margin-right: 20%;">
 	<li>Un articolo finale avente solo il budget o consuntivo non verranno considerati (devono presentarsi in entrambi).</li>
 	<li>Se la produzione di un articolo ha come output totale 0 in un ordine di produzione, lo consideriamo come un errore di produzione che ha causato la perdita di materie prime e materiale prodotto (quindi un costo senza guadagno).</li>
-	<li>L’ analisi degli scostamenti è focalizzata sui singoli articoli.</li>
 	<li>Nella vendita il ricavo è considerato in valuta locale del cliente.</li>
 	<li>Gli articoli ART0004084 e ART0004146 sono eliminati poichè la quantità di prodotto in impiego orario risorse è pari a 0 in tutti gli ordini di produzione.</li>
+	<li>Importo costo (TOTALE) di un articolo indica il costo della materiale diretto. In caso in cui il materiale diretto sia un articolo a sua volta prodotto, indicherà il prezzo della materia prima e lavorazione di suddetto articolo per la quantità indicata + eventuali costi di magazzino.</li>
+	<li>In caso in cui i materiali prodotti(articoli intermedi) non siano sufficienti, consideriamo i materiali mancanti come “acquistati” dall’azienda, causando quindi un costo, tale costo è contenuto nell’Importo costo (TOTALE) in CONSUMI</li>
+	<li>L’analisi degli scostamenti si concentra sugli articoli finali, considerati come tutti quegli articoli che non sono, in quantità, completamente utilizzati per produrne altri. Ciò significa che gli articoli intermedi che sono avanzati dalla produzione di ulteriori articoli verranno considerati come finali, nella rispettiva quantità d'avanzo</li>
+	<li>Di conseguenza è possibile avere articoli con quantità prodotta uguale a zero (considerati quindi come articoli non finali), nel caso in cui tutta la quantità prodotta di quest’ultimo sia stata usata per la produzione di altri articoli.</li>
 </ul>
 
 {% endblock %}

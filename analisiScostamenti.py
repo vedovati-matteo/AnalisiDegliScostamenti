@@ -6,6 +6,24 @@ import functions as fun
 
 conn = sqlite3.connect('dati.db')
 
+# %%
+
+articoliSemi_b = pd.read_sql_query("""
+	SELECT codicemp, sum(quantitaMP)
+	FROM Consumo
+	WHERE codicemp IN (SELECT nrarticolo FROM Consumo) AND BC='BUDGET'
+	GROUP BY codicemp
+""", conn)
+
+articoliSemi_c = pd.read_sql_query("""
+	SELECT codicemp, sum(quantitaMP)
+	FROM Consumo
+	WHERE codicemp IN (SELECT nrarticolo FROM Consumo) AND BC='CONSUNTIVO'
+	GROUP BY codicemp
+""", conn)
+
+
+
 # %% [COSTI]
 df = pd.read_sql_query("""
 	SELECT ior.nrOrdineProduzione, ior.nrArticolo, ior.BC, ior.tempoRisorsa, cor.costoOrarioRis, ior.quantitaOutput
@@ -40,6 +58,46 @@ df_ricavi_c = fun.getDfRicavi(df_c)
 articoli_c = list(df_costo_b['nrArticolo'])
 articoli_v = list(df_ricavi_b['nrArticolo'])
 
+# %%
+
+df_costo_b1 = df_costo_b.copy()
+df_costo_c1 = df_costo_c.copy()
+
+# quantita
+
+qta_b = []
+
+for r in df_costo_b.values:
+	v = articoliSemi_b.index[articoliSemi_b['codiceMP'] == r[0]].tolist()
+	if v:
+		q = float(r[4] - articoliSemi_b.iloc[v]['sum(quantitaMP)'])
+		if  q >= 0:
+			qta_b.append(q)
+		else:
+			qta_b.append(0)
+		
+	else:
+		qta_b.append(r[4])
+
+qta_c = []
+
+for r in df_costo_c.values:
+	v = articoliSemi_c.index[articoliSemi_c['codiceMP'] == r[0]].tolist()
+	if v:
+		q = float(r[4] - articoliSemi_c.iloc[v]['sum(quantitaMP)'])
+		if  q >= 0:
+			qta_c.append(q)
+		else:
+			qta_c.append(0)
+		
+	else:
+		qta_c.append(r[4])
+
+df_costo_b['quantita'] = qta_b
+df_costo_c['quantita'] = qta_c
+
+# %%
+
 # volume
 volume_costi_b = df_costo_b['quantita'].sum()
 volume_costi_c = df_costo_c['quantita'].sum()
@@ -54,14 +112,14 @@ mix_ricavi_b = df_ricavi_b['quantita'] / volume_ricavi_b
 mix_ricavi_c = df_ricavi_c['quantita'] / volume_ricavi_c 
 
 # costi unitari
-costoU_b = df_costo_b['costo'] / df_costo_b['quantita']
-costoU_c = df_costo_c['costo'] / df_costo_c['quantita']
+costoU_b = df_costo_b['costo'] / df_costo_b1['quantita']
+costoU_c = df_costo_c['costo'] / df_costo_c1['quantita']
 # materiale diretto
-mdU_b = df_costo_b['md'] / df_costo_b['quantita']
-mdU_c = df_costo_c['md'] / df_costo_c['quantita']
+mdU_b = df_costo_b['md'] / df_costo_b1['quantita']
+mdU_c = df_costo_c['md'] / df_costo_c1['quantita']
 #lavoro diretto
-ldU_b = df_costo_b['ld'] / df_costo_b['quantita']
-ldU_c = df_costo_c['ld'] / df_costo_c['quantita']
+ldU_b = df_costo_b['ld'] / df_costo_b1['quantita']
+ldU_c = df_costo_c['ld'] / df_costo_c1['quantita']
 
 # ricavi unitari
 ricaviU_b = df_ricavi_b['ricavo'] / df_ricavi_b['quantita']
@@ -76,6 +134,8 @@ df_valuta = pd.read_sql_query("""
 BCgrouped = df_valuta.groupby(df_valuta.BC)
 df_valuta_b = BCgrouped.get_group('BUDGET')
 df_valuta_c = BCgrouped.get_group('CONSUNTIVO')
+
+
 
 
 # %% [pagina iniziale]
@@ -123,7 +183,7 @@ delta_valuta = round(mix_eff_valutaC - mix_eff[3], 2)
 
 delta_ricavi = round(consuntivo[3] -  mix_eff_valutaC, 2)
 # %% [selezione di articoli specifici]
-artScost = fun.getScostamenti(df_costo_b, df_costo_c, df_ricavi_b, df_ricavi_c, df_valuta_b, df_valuta_c)
+artScost = fun.getScostamenti(df_costo_b1, df_costo_c1, df_ricavi_b, df_ricavi_c, df_valuta_b, df_valuta_c)
 
 df_articoli = pd.read_sql_query("""
 SELECT v.nrArticolo, c.numeroCliente

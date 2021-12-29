@@ -21,7 +21,7 @@ def listaArticoliFinali():
 @app.route("/articoloSpecifico", methods=['GET'])
 def articoloSpecifico():
     nrArticolo = request.args.get('codiceArticolo')
-    return render_template("articoloSpecifico.html", nrArticolo = nrArticolo, cliente = fun.getCliente(nrArticolo, df_articoli), valuta = fun.getValuta(nrArticolo, df_ricavi_b), p = fun.articoloFinale(nrArticolo, df_valuta_b, df_valuta_c, df_costo_b, df_costo_c, df_ricavi_b, df_ricavi_c))
+    return render_template("articoloSpecifico.html", nrArticolo = nrArticolo, cliente = fun.getCliente(nrArticolo, df_articoli), valuta = fun.getValuta(nrArticolo, df_ricavi_b), p = fun.articoloFinale(nrArticolo, df_valuta_b, df_valuta_c, df_costo_b1, df_costo_c1, df_ricavi_b, df_ricavi_c))
 
 
 @app.route("/scostamentoVolumi")

@@ -4,7 +4,7 @@
 
 {% block content %}
 <h1>Scostamento Ricavi</h1>
-<p>Lo scostamento in questione non è tutto attribuibile al delta dei ricavi, una parte deve essere attribuita al discostamento di valuta, il quale non è controllabile.</p>
+<p>Lo scostamento in questione non è tutto attribuibile al delta dei ricavi, una parte deve essere attribuita allo scostamento di valuta, il quale non è controllabile.</p>
 <h3>Delta completo: {{ (delta[0] + delta[1])| round(2) }}€</h3>
 <h2>Scostamento Valuta:</h2>
 <h3>Delta valuta: {{delta[0]}}€</h3>
@@ -33,7 +33,7 @@
 <table id="tabella">
 	<thead>
 		<td>Codice Articolo</td>
-		<td>Quantità<</td>
+		<td>Quantità</td>
 		<td>Scostamento</td>
 		<td>Budget Unitario</td>
 		<td>Scostamento Unitario</td>
