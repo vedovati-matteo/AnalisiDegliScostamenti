@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 import pandas as pd
 import functions as fun
 
@@ -8,7 +8,7 @@ exec(open('analisiScostamenti.py').read())
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    return redirect(url_for("analisiScostamenti"))
 
 @app.route("/analisiScostamenti")
 def analisiScostamenti():
