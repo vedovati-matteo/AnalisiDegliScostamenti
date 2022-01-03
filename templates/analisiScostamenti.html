@@ -49,7 +49,7 @@
 			{% elif x == 1 %}
 				<td id="tdXY" class = "tdXYSel" onclick='location.href="/scostamentoLD"' title="Scostamento Lavoro Diretto">{{ (p[3][x]-p[2][x])|round(2) }}€ ({{ ((p[3][x]-p[2][x])/p[2][x]*100)|round(2) }}%)</td>
 			{% elif x == 2 %}
-				<td id="tdXY" class = "tdXYSel" onclick='location.href="/scostamentoCosti"' title="Scostamento Diretto">{{ (p[3][x]-p[2][x])|round(2) }}€ ({{ ((p[3][x]-p[2][x])/p[2][x]*100)|round(2) }}%)</td>
+				<td id="tdXY" class = "tdXYSel" onclick='location.href="/scostamentoCosti"' title="Scostamento Costi">{{ (p[3][x]-p[2][x])|round(2) }}€ ({{ ((p[3][x]-p[2][x])/p[2][x]*100)|round(2) }}%)</td>
 			{% elif x == 3 %}
 				<td id="tdXY" class = "tdXYSel" onclick='location.href="/scostamentoPrezzo"' title="Scostamento Ricavi">{{ (p[3][x]-p[2][x])|round(2) }}€ ({{ ((p[3][x]-p[2][x])/p[2][x]*100)|round(2) }}%)</td>
 			{% elif x == 4 %}
