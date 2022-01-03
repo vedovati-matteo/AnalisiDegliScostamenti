@@ -17,7 +17,7 @@
 		{{ x[2] }},
 	{% endfor %}];
 
-	var trace1 = {
+	var trace2 = {
 		x: x1,
 		type: 'histogram',
 		opacity: 0.5,
@@ -28,7 +28,7 @@
 		},
 	};
 
-	var trace2 = {
+	var trace1 = {
 		x: x2,
 		type: 'histogram',
 		opacity: 0.5,
@@ -43,7 +43,7 @@
 
 	var layout = {
 		title: 'Istogramma Scostamento Costi Unitari',
-		barmode: "overlay",
+		barmode: "stack",
 		bargap: 0.02,
 		xaxis: {title: "Valore(€)"}, 
   		yaxis: {title: "Numero Articoli"}
