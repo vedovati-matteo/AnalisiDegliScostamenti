@@ -14,9 +14,9 @@ def index():
 def analisiScostamenti():
     return render_template("analisiScostamenti.html", p=tabellaScostamenti)
 
-@app.route("/listaArticoliFinali")
+@app.route("/listaArticoliVenduti")
 def listaArticoliFinali():
-    return render_template("listaArticoliFinali.html", p=artScost.values.tolist())
+    return render_template("listaArticoliVenduti.html", p=artScost.values.tolist())
 
 @app.route("/articoloSpecifico", methods=['GET'])
 def articoloSpecifico():

@@ -149,7 +149,7 @@ tabellaScostamenti = (budget, mix_std, mix_eff, consuntivo)
 
 # %% [scostamento volumi]
 volumi = ((int(volume_costi_b), int(volume_costi_c)),(int(volume_ricavi_b), int(volume_ricavi_c)))
-delta_volumi = (round(mix_std[2] - budget[2], 2), round(mix_std[4] - budget[4], 2))
+delta_volumi = (round(mix_std[2] - budget[2], 2), round(mix_std[3] - budget[3], 2))
 
 # %% [scostamento mix]
 # costi
